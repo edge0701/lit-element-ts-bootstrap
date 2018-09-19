@@ -1,25 +1,33 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "removeComments": true,
-        "preserveConstEnums": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "sourceMap": true,
-        "target": "es2017",
-        "allowJs": true,
-        "lib": [      
-          "dom",
-          "es2017",
-          "esnext.asynciterable"
-        ],
-        "plugins": [
-          {
-            "name": "typescript-lit-html-plugin"
-          }
-        ]
-    },
-    "include": [
-      "./app/**/*.ts"
-    ]
-  }
+  "compilerOptions": {
+    "module": "commonjs",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "target": "es2017",
+    "allowJs": true,
+    "outDir": "dist",
+    "lib": [      
+      "dom",
+      "es2017",
+      "esnext.asynciterable"
+    ],
+    "plugins": [
+      {
+        "name": "typescript-lit-html-plugin"
+      }
+    ],
+    "typeRoots" : [
+      "./node_modules/@types",
+      "./app/src/typings"
+    ],
+  },
+  "include": [
+    "app/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

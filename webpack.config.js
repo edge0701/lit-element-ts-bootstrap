@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-//const appConfig = require('./app/config/commonjs');
 
 module.exports = {
   mode: 'development',
@@ -15,13 +14,30 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
+    symlinks: false,
   },
   module: {
     rules: [
       {
         test: /\.ts?$/,
-        use: 'ts-loader',
+        use: [
+          {
+            loader: 'minify-lit-html-loader',
+            options: {
+              htmlMinifier: {
+                customAttrCollapse: /events/,
+                ignoreCustomFragments: [
+                  /<\s/,
+                  /<=/
+                ]
+              }
+            }
+          },
+          {
+            loader: 'ts-loader'
+          },
+        ],
         exclude: /node_modules/
       }
     ]
@@ -31,13 +47,9 @@ module.exports = {
     
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, 'bower_components/webcomponentsjs/*.js'),
-        to: 'bower_components/webcomponentsjs/[name].[ext]'
-      },
-      /*{
-        from: path.resolve(__dirname, 'app/assets'),
-        to: 'assets'
-      }*/
+        from: path.resolve(__dirname, 'node_modules/@webcomponents/webcomponentsjs'),
+        to: 'node_modules/@webcomponents/webcomponentsjs'
+      }
     ]),
 
     new HtmlWebpackPlugin({
@@ -45,17 +57,12 @@ module.exports = {
       inject: false,
       //config: appConfig
     }),
-
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    })
   ],
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
     compress: true,
     host: '127.0.0.1',
-    port: 9000,
-    open: true,
+    port: 10000,
+    open: false,
     // noInfo: true,
     // serve index.html in place of 404 responses to allow HTML5 history
     historyApiFallback: true,
