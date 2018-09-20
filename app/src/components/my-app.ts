@@ -1,9 +1,7 @@
-import { html, LitElement } from '@polymer/lit-element';
+import { customElement, html, LitElement } from '@polymer/lit-element';
 
-import { customElement } from '../decorators/webcomponent';
-
-@customElement('my-app')
-class NaApp extends LitElement {
+@customElement('my-app' as any)
+class MyApp extends LitElement {
   public render() {
     return html`Hello, world!`;
   }
