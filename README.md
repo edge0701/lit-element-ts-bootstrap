@@ -5,7 +5,7 @@
 yarn install
 ```
 
-## Compile and server
+## Build and run local server
 ```console
 yarn build:serve
 ```
